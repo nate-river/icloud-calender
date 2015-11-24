@@ -14,10 +14,9 @@ body{
     -webkit-font-smoothing: antialiased;
 }
 
-background-position: -96px -264px;
 .header{
     width:100%;
-    background-image: linear-gradient(rgb(253, 253, 253), rgb(249, 249, 249));
+    background-image: linear-gradient(#fdfdfd, #f9f9f9);
     position: absolute;
     top: 0px;
     left: 0px;
@@ -160,11 +159,24 @@ background-position: -96px -264px;
 .off-month{
     color:#999;
 }
+
 .today{
     background:#ff3b30;
     color:#fff;
-    /* color:#ff3b30; */
 }
+.today-leave{
+    color:#ff3b30;
+}
+.cell.today:hover{
+    background:#ff3b30;
+    opacity:0.5;
+}
+.cell.today-leave:hover{
+    background:#ff3b30;
+    color:#fff;
+    opacity:0.5;
+}
+
 
 .separator-c{
     position:absolute;
@@ -195,9 +207,24 @@ background-position: -96px -264px;
 }
 .daytime-show{
     border: 1px solid #f2f2f2;
-    width:48%;
+    width:38%;
     position: absolute;
     right: 0px;
     top: 0px;
-    height:478px;
+    height:378px;
+    overflow:scroll;
+    padding:50px;
+}
+.daytime-show img{
+    width:100%;
+}
+.icloud-text{
+    position: absolute;
+    width: 56px;
+    height: 16px;
+    top: 14px;
+    left:13px;
+    background-image: url('../images/packed-5.png');
+    background-position: -73px -603px;
+    background-repeat: no-repeat
 }
