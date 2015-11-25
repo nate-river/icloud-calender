@@ -7,11 +7,16 @@ ol, ul {list-style: none}
 @font-face{font-family:'SFNSText';src:local(".SFNSText-Medium"),url("../fonts/SFNSText-Medium.woff") format("woff");font-weight:500}
 
 body{
+    min-width:1236px;
     font-family: SFNSText, 'Helvetica Neue', 'Microsoft Yahei', SimHei, sans-serif;
     font-size: 15px;
     font-weight: 300;
     line-height: 18px;
     -webkit-font-smoothing: antialiased;
+}
+.event-show{
+    text-align:center;
+    overflow:hidden;
 }
 
 .header{

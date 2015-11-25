@@ -8,7 +8,22 @@ window.onload = function(){
   var $ = function(id){
     return document.getElementById(id);
   };
-
+  var ajax = function(senddata){
+    var req = new XMLHttpRequest();
+    req.open(senddata.type||'get',senddata.url,true);
+    req.send();
+    req.onreadystatechange = function(){
+      if(this.readyState == this.DONE && this.status == 200){
+        senddata.onsuccess(this.response);
+      }
+    };
+  };
+  var jsonp = function(url,callback){
+    window.tmp  = function(d){callback(d);};
+    var script = document.createElement('script');
+    script.src = url + '&callback=tmp';
+    document.getElementsByTagName('head')[0].appendChild(script);
+  };
   var isToday = function(){
     var now = new Date();
     if(date.getFullYear() == now.getFullYear()
@@ -18,7 +33,6 @@ window.onload = function(){
     }
     return false;
   };
-
   var addClass = function(el,c){
     var t = el.className.split(' ');
     var dict = {};
@@ -46,7 +60,6 @@ window.onload = function(){
       return true;
     } else { return false; }
   };
-
   var setmeiyuetianshu = function(year){
     if( isLeapYear(year) ){
       meiyuetianshu[1] = 29;
@@ -54,7 +67,6 @@ window.onload = function(){
   };
   //页面刷新再画日历之前应该调用一下
   setmeiyuetianshu();
-
   //前一天
   var previousDay = function(){
     date.setDate(date.getDate()-1);
@@ -97,7 +109,6 @@ window.onload = function(){
       fulldate.innerHTML  = formate();
     };
   })();
-
   var drawcalender = function(){
     setmeiyuetianshu();
     var d = date.getDate();
@@ -137,7 +148,6 @@ window.onload = function(){
   };
   drawcalender();
   ondatechange();
-
   next.onclick = function(){
     nextDay();drawcalender(); ondatechange();
   };
@@ -148,26 +158,8 @@ window.onload = function(){
   prev.onmousedown = function(e){e.preventDefault();};
   next.onmousedown = function(e){e.preventDefault();};
 
-  var ajax = function(senddata){
-    var req = new XMLHttpRequest();
-    req.open(senddata.type||'get',senddata.url,true);
-    req.send();
-    req.onreadystatechange = function(){
-      if(this.readyState == 4){
-        senddata.onsuccess(this.response);
-      }
-    };
-  };
-
   for ( var i = 0;  i < cells.length;  i++){
     cells[i].onclick = function(){
-      ajax({
-        type:'get',
-        url:'http://localhost:3000/picture&time=1',
-        onsuccess:function(data){
-          img.src = JSON.parse(data)[0].src;
-        }
-      });
       var currentYear = date.getFullYear();
       var currentMonth = date.getMonth();
       var currentDate = date.getDate();
@@ -200,23 +192,22 @@ window.onload = function(){
     date = new Date();
     drawcalender(); ondatechange();
   };
-
-
-
-  // req.onload = function(){
-  //   console.log('onload',this.readyState,this.response);
-  // };
-  // req.onloadend = function(){
-  //   console.log('onloadend',this.readyState,this.response);
-  // };
-  // req.onloadstart = function(){
-  //   console.log('onloadstart',this.readyState,this.response);
-  // };
-  // req.onprogress = function(){
-  //   console.log('onprogress',this.readyState,this.response);
-  // };
-  // req.onloadend = function(){
-  //   console.log('onloadend',this.readyState,this.response);
-  // };
-
 };
+
+// jsonp('http://api.map.baidu.com/location/ip?ak=1imlG87L8GlD4KMLKOL0bOaE',function(data){
+//   var url = 'http://api.map.baidu.com/telematics/v3/weather?\
+//           location='+data.address.split('|')[2]+'\
+//           &output=json\
+//           &ak=1imlG87L8GlD4KMLKOL0bOaE';
+//   jsonp( url,function(data){
+//     console.log(data);
+//     // fulldate.innerHTML = data.results[0].weather_data[0].date;
+//   });
+// });
+// ajax({
+//   type:'get',
+//   url:'http://localhost:3000/picture&time=1',
+//   onsuccess:function(data){
+//     img.src = JSON.parse(data)[0].src;
+//   }
+// });
